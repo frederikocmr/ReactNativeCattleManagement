@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
-import AppNavigator from './navigation/AppNavigator';
+import AppNavigator from './src/navigation/AppNavigator';
 
 import firebase from 'react-native-firebase';
 import { firebaseConfig } from './config';
