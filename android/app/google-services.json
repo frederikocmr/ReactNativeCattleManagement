@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "400576838847",
+    "firebase_url": "https://rancho-react-native-app.firebaseio.com",
+    "project_id": "rancho-react-native-app",
+    "storage_bucket": "rancho-react-native-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400576838847:android:48665ddfb315786c",
+        "android_client_info": {
+          "package_name": "com.reactnativerancho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400576838847-ju3hk3sgsgi5doqktai8i78cclqj8mo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb03BB5ZWWal_AsnAPohLJsWm_SEziYr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400576838847-ju3hk3sgsgi5doqktai8i78cclqj8mo5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
