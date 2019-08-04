@@ -228,7 +228,13 @@ class HomeScreen extends Component {
                 {this.renderSellForm()}
                 {this.renderSeparateForm()}
                 {this.renderWeighForm()}
-                <TouchableOpacity onPress={this.toggleModal}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("ManageScreen", {
+                      itemId: 86
+                    });
+                  }}
+                >
                   <View
                     style={[
                       styles.button,

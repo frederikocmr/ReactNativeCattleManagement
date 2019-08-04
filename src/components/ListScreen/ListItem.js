@@ -7,8 +7,8 @@ const listItem = props => (
   <TouchableOpacity onPress={props.onItemPressed}>
     <View style={styles.listItem}>
     <Icon
-                  name="cow"
-                  size={50}
+                  name="shape-polygon-plus"
+                  size={20}
                   style={{ right: 0 }}
                   color="black"
                 />
@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#eee",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    borderLeftColor: Colors.mainColor,
+    borderLeftWidth: 4
   },
   manageImage: {
       marginRight: 8,
@@ -33,7 +35,8 @@ const styles = StyleSheet.create({
   },
   textItem: {
     color: Colors.mainColor,
-    fontSize: 20
+    fontSize: 18,
+    paddingLeft: 5
   }
 });
 

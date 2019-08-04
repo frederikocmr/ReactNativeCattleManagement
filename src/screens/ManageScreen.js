@@ -13,7 +13,7 @@ import ManageDetail from "../components/ListScreen/ManageDetail";
 class ManageScreen extends Component {
   state = {
     places: [],
-    selectedManage: null
+    selectedManage: null,
   };
 
   placeAddedHandler = manageName => {  
@@ -76,6 +76,9 @@ class ManageScreen extends Component {
   };
 
   render() {
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('itemId');
+
     return (
       <View style={styles.container}>
         <ManageDetail
@@ -83,6 +86,7 @@ class ManageScreen extends Component {
           onItemDeleted={this.placeDeletedHandler}
           onModalClosed={this.modalClosedHandler}
         />
+        <Text>itemId: {JSON.stringify(itemId)}</Text>
         <ManageInput onPlaceAdded={this.placeAddedHandler} />
         <ManageList
           places={this.state.places}
