@@ -19,9 +19,9 @@ class Home extends Component {
   onPress = () => {
     this.setState({
       selected: !this.state.selected,
-      colorSelected: (this.state.selected ? "white" : Colors.tabIconSelected )
+      colorSelected: (this.state.selected ? "white" : Colors.mainColor )
     });
-   this.props.onItemSelected;
+    this.props.onItemSelected(!this.state.selected, this.props.name);
   };
   
   render() {
@@ -47,11 +47,11 @@ class Home extends Component {
             alignItems: "flex-start",
             justifyContent: "space-evenly",
             paddingLeft: 10,
-            borderLeftColor: Colors.tabIconSelected,
+            borderLeftColor: Colors.mainColor,
             borderLeftWidth: 4
           }, {backgroundColor: this.state.colorSelected}]}
           onPress={this.onPress }
-          underlayColor={Colors.tabIconSelected}
+          underlayColor={Colors.mainColor}
         >
           <View style={{ flex: 1, padding: 5 }}>
             <Text style={{ fontSize: 14, fontWeight: "bold" }}>

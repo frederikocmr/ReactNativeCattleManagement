@@ -7,7 +7,9 @@ import {
   ScrollView,
   Dimensions,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
+  TextInput
 } from "react-native";
 
 import Modal from "react-native-modal";
@@ -21,7 +23,6 @@ import SellForm from "../components/ManagementModal/SellForm";
 import SeparateForm from "../components/ManagementModal/SeparateForm";
 import WeighForm from "../components/ManagementModal/WeighForm";
 
-
 import PesagemImage from "../assets/images/pesagem.png";
 import ExamesImage from "../assets/images/pesagem.png";
 import AparteImage from "../assets/images/pesagem.png";
@@ -34,16 +35,12 @@ const { height, width } = Dimensions.get("window");
 
 class HomeScreen extends Component {
   state = {
-    selectedItems: [
-      {
-        WeighSelected: true,
-        ExamsSelected: true,
-        SeparateSelected: true,
-        MedicineSelected: true,
-        ReproductionSelected: true,
-        SellSelected: true
-      }
-    ],
+    WeighSelected: false,
+    ExamsSelected: false,
+    SeparateSelected: false,
+    MedicineSelected: false,
+    ReproductionSelected: false,
+    SellSelected: false,
     enabledButton: false,
     isModalVisible: false
   };
@@ -52,14 +49,41 @@ class HomeScreen extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  itemSelectedHandler = WeighSelected => {
-    this.setState(prevState => {
-      return {
-        WeighSelected: WeighSelected
-      };
-    });
+  itemSelectedHandler = (propSelected, propName) => {
+    this.state.enabledButton = true;
 
-    alert("item selecionado");
+    this.setState(prevState => {
+      switch (propName) {
+        case "PESAGEM":
+          return {
+            WeighSelected: propSelected
+          };
+        case "EXAMES":
+          return {
+            ExamsSelected: propSelected
+          };
+        case "APARTE":
+          return {
+            SeparateSelected: propSelected
+          };
+        case "MEDICAMENTO":
+          return {
+            MedicineSelected: propSelected
+          };
+        case "REPRODUÇÃO":
+          return {
+            ReproductionSelected: propSelected
+          };
+        case "VENDA":
+          return {
+            SellSelected: propSelected
+          };
+        default:
+          this.state.enabledButton = propSelected;
+
+          break;
+      }
+    });
   };
 
   onAddManagement = () => {
@@ -68,7 +92,15 @@ class HomeScreen extends Component {
         enabledButton: this.checkIfValuesAreTrue()
       };
     });
-    this.toggleModal();
+
+    if (this.state.enabledButton) {
+      this.toggleModal();
+    } else {
+      Alert.alert(
+        "ATENÇÃO",
+        "É necessário selecionar pelo menos um tipo de manejo antes de prosseguir!"
+      );
+    }
   };
 
   modalClosedHandler = () => {
@@ -79,17 +111,17 @@ class HomeScreen extends Component {
 
   checkIfValuesAreTrue() {
     return (
-      this.state.selectedItems[0].SeparateSelected ||
-      this.state.selectedItems[0].ReproductionSelected ||
-      this.state.selectedItems[0].MedicineSelected ||
-      this.state.selectedItems[0].ExamsSelected ||
-      this.state.selectedItems[0].WeighSelected ||
-      this.state.selectedItems[0].SellSelected
+      this.state.SeparateSelected ||
+      this.state.ReproductionSelected ||
+      this.state.MedicineSelected ||
+      this.state.ExamsSelected ||
+      this.state.WeighSelected ||
+      this.state.SellSelected
     );
   }
 
   renderExamsForm = () => {
-    if (this.state.selectedItems[0].ExamsSelected) {
+    if (this.state.ExamsSelected) {
       return <ExamsForm />;
     } else {
       return null;
@@ -97,7 +129,7 @@ class HomeScreen extends Component {
   };
 
   renderMedicineForm = () => {
-    if (this.state.selectedItems[0].MedicineSelected) {
+    if (this.state.MedicineSelected) {
       return <MedicineForm />;
     } else {
       return null;
@@ -105,7 +137,7 @@ class HomeScreen extends Component {
   };
 
   renderReproductionForm = () => {
-    if (this.state.selectedItems[0].ReproductionSelected) {
+    if (this.state.ReproductionSelected) {
       return <ReproductionForm />;
     } else {
       return null;
@@ -113,7 +145,7 @@ class HomeScreen extends Component {
   };
 
   renderSellForm = () => {
-    if (this.state.selectedItems[0].SellSelected) {
+    if (this.state.SellSelected) {
       return <SellForm />;
     } else {
       return null;
@@ -121,7 +153,7 @@ class HomeScreen extends Component {
   };
 
   renderSeparateForm = () => {
-    if (this.state.selectedItems[0].SeparateSelected) {
+    if (this.state.SeparateSelected) {
       return <SeparateForm />;
     } else {
       return null;
@@ -129,7 +161,7 @@ class HomeScreen extends Component {
   };
 
   renderWeighForm = () => {
-    if (this.state.selectedItems[0].WeighSelected) {
+    if (this.state.WeighSelected) {
       return <WeighForm />;
     } else {
       return null;
@@ -150,7 +182,7 @@ class HomeScreen extends Component {
               onPress={this.toggleModal}
               style={{
                 width: 30,
-                alignSelf: 'flex-end',
+                alignSelf: "flex-end",
                 marginRight: 10
               }}
             >
@@ -159,7 +191,7 @@ class HomeScreen extends Component {
                   name="ios-close"
                   size={50}
                   style={{ right: 0 }}
-                  color={Colors.tabIconSelected}
+                  color={Colors.mainColor}
                 />
               </View>
             </TouchableOpacity>
@@ -172,7 +204,24 @@ class HomeScreen extends Component {
               <View
                 style={{ flex: 1, backgroundColor: "white", paddingBottom: 20 }}
               >
-              
+                <Text
+                  style={{
+                    marginLeft: 20,
+                    marginRight: 20,
+                    fontSize: 20,
+                    fontWeight: "400",
+                    color: "#8da614"
+                  }}
+                >
+                  Nome do Manejo:
+                </Text>
+                <TextInput
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  placeholder="Nome do Manejo"
+                  onChangeText={email => this.setState({ email })}
+                  value={this.state.email}
+                />
                 {this.renderExamsForm()}
                 {this.renderMedicineForm()}
                 {this.renderReproductionForm()}
@@ -183,7 +232,7 @@ class HomeScreen extends Component {
                   <View
                     style={[
                       styles.button,
-                      { backgroundColor: Colors.tabIconSelected }
+                      { backgroundColor: Colors.mainColor }
                     ]}
                   >
                     <Text
@@ -256,8 +305,7 @@ class HomeScreen extends Component {
                   paddingHorizontal: 20
                 }}
               >
-                Selecione para ativar os tipos desejados e criar um
-                novo manejo!
+                Selecione para ativar os tipos desejados e criar um novo manejo!
               </Text>
               <View
                 style={{
@@ -274,15 +322,36 @@ class HomeScreen extends Component {
                   name="PESAGEM"
                   onItemSelected={this.itemSelectedHandler}
                 />
-                <Home width={width} image={ExamesImage} name="EXAMES" />
-                <Home width={width} image={AparteImage} name="APARTE" />
+                <Home
+                  width={width}
+                  image={ExamesImage}
+                  name="EXAMES"
+                  onItemSelected={this.itemSelectedHandler}
+                />
+                <Home
+                  width={width}
+                  image={AparteImage}
+                  name="APARTE"
+                  onItemSelected={this.itemSelectedHandler}
+                />
                 <Home
                   width={width}
                   image={MedicamentoImage}
                   name="MEDICAMENTO"
+                  onItemSelected={this.itemSelectedHandler}
                 />
-                <Home width={width} image={ReproducaoImage} name="REPRODUÇÃO" />
-                <Home width={width} image={VendaImage} name="VENDA" />
+                <Home
+                  width={width}
+                  image={ReproducaoImage}
+                  name="REPRODUÇÃO"
+                  onItemSelected={this.itemSelectedHandler}
+                />
+                <Home
+                  width={width}
+                  image={VendaImage}
+                  name="VENDA"
+                  onItemSelected={this.itemSelectedHandler}
+                />
               </View>
               <View
                 style={{
@@ -293,12 +362,12 @@ class HomeScreen extends Component {
                 <TouchableOpacity onPress={this.onAddManagement}>
                   <View
                     style={{
-                      backgroundColor: Colors.tabIconSelected,
+                      backgroundColor: Colors.mainColor,
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: 15,
                       height: 60,
-                      borderColor: Colors.tabIconSelected,
+                      borderColor: Colors.mainColor,
                       borderWidth: 3
                     }}
                   >
@@ -340,5 +409,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 40,
     margin: 6
+  },
+  textInput: {
+    height: 40,
+    marginLeft: 20,
+    marginRight: 20,
+    width: "90%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
+    borderRadius: 8,
+    marginBottom: 8
   }
 });

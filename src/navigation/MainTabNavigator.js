@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import ManageScreen from '../screens/ManageScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Colors from '../constants/Colors'
 
@@ -38,7 +38,7 @@ HomeStack.path = '';
 
 const LinksStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Links: ManageScreen,
   },
   config
 );
@@ -78,7 +78,7 @@ const tabNavigator = createBottomTabNavigator({
       style: {
         height: 55
       },
-      activeTintColor: Colors.tabIconSelected,
+      activeTintColor: Colors.mainColor,
       labelStyle: {
         fontSize: 12, 
         paddingBottom: 5
