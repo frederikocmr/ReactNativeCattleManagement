@@ -7,25 +7,11 @@ class ExamsForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "400",
-            color: '#8da614'
-          }}
-        >
-          Exame
-        </Text>
-        <Text
-        style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-          >Selecione o exame abaixo:</Text>
+        <Text style={styles.title}>Exame</Text>
+        <Text style={styles.subtitle}>Selecione o exame abaixo:</Text>
         <Picker
           selectedValue={this.state.exam}
-          style={{ height: 70, width: "100%", color: "gray" }}
+          style={styles.picker}
           onValueChange={(itemValue, itemIndex) =>
             this.setState({ exam: itemValue })
           }
@@ -48,5 +34,21 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderBottomColor: 'gray' ,
     borderBottomWidth: 0.5
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "400",
+    color: '#8da614'
+  },
+  subtitle: {
+    fontSize: 15,
+    marginTop: 5,
+    fontWeight: "400"
+  },
+  picker: {
+    height: 70, 
+    width: "100%",
+    color: "gray"
   }
+
 });

@@ -8,27 +8,11 @@ class MedicineForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "400",
-            color: '#8da614'
-          }}
-        >
-          Medicamento 
-        </Text>
-        <Text
-          style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-        >
-          Categoria do Medicamento:
-        </Text>
+        <Text style={styles.title}> Medicamento </Text>
+        <Text style={styles.subtitle}>Categoria do Medicamento:</Text>
         <Picker
           selectedValue={this.state.exam}
-          style={{ height: 70, width: "100%", color: "gray" }}
+          style={styles.picker}
           onValueChange={(itemValue, itemIndex) =>
             this.setState({ exam: itemValue })
           }
@@ -37,15 +21,7 @@ class MedicineForm extends Component {
           <Picker.Item label="Vermífugo" value="2" />
           <Picker.Item label="Outro" value="3" />
         </Picker>
-        <Text
-          style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-        >
-          Nome do Medicamento:
-        </Text>
+        <Text style={styles.subtitle} > Nome do Medicamento:</Text>
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
@@ -53,18 +29,10 @@ class MedicineForm extends Component {
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
         />
-          <Text
-          style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-        >
-          Aplicado por:
-        </Text>
+          <Text style={styles.subtitle}> Aplicado por:</Text>
         <Picker
           selectedValue={this.state.exam}
-          style={{ height: 70, width: "100%", color: "gray" }}
+          style={styles.picker}
           onValueChange={(itemValue, itemIndex) =>
             this.setState({ exam: itemValue })
           }
@@ -72,15 +40,7 @@ class MedicineForm extends Component {
           <Picker.Item label="Dose" value="1" />
           <Picker.Item label="Peso" value="2" />
         </Picker>
-        <Text
-          style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-        >
-          Dosagem (ml):
-        </Text>
+        <Text style={styles.subtitle}> Dosagem (ml):</Text>
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
@@ -112,5 +72,20 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 8,
     marginBottom: 8
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "400",
+    color: '#8da614'
+  },
+  subtitle: {
+    fontSize: 15,
+    marginTop: 5,
+    fontWeight: "400"
+  },
+  picker: {
+    height: 70, 
+    width: "100%", 
+    color: "gray"
   }
 });
