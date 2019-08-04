@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import firebase from 'react-native-firebase';
+import firebase from "react-native-firebase";
 
 export default class Login extends Component {
   state = { email: "", password: "", errorMessage: null };
@@ -37,7 +37,7 @@ export default class Login extends Component {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Fazer Login" onPress={this.handleLogin} />
+        <Button title="Fazer Login" style={{ marginTop: 10, width: 30 }} onPress={this.handleLogin} />
       </View>
     );
   }

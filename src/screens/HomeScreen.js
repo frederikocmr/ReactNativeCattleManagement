@@ -7,12 +7,20 @@ import {
   ScrollView,
   Dimensions,
   Animated,
-  TouchableOpacity,
-  Button
+  TouchableOpacity
 } from "react-native";
 
 import Modal from "react-native-modal";
+import Icon from "react-native-vector-icons/Ionicons";
 import Home from "../components/HomeScreen/Home";
+
+import ExamsForm from "../components/ManagementModal/ExamsForm";
+import MedicineForm from "../components/ManagementModal/MedicineForm";
+import ReproductionForm from "../components/ManagementModal/ReproductionForm";
+import SellForm from "../components/ManagementModal/SellForm";
+import SeparateForm from "../components/ManagementModal/SeparateForm";
+import WeighForm from "../components/ManagementModal/WeighForm";
+
 
 import PesagemImage from "../assets/images/pesagem.png";
 import ExamesImage from "../assets/images/pesagem.png";
@@ -28,12 +36,12 @@ class HomeScreen extends Component {
   state = {
     selectedItems: [
       {
-        pesagemSelected: true,
-        examesSelected: false,
-        aparteSelected: false,
-        medicamentoSelected: false,
-        reproducaoSelected: false,
-        vendaSelected: false
+        WeighSelected: true,
+        ExamsSelected: true,
+        SeparateSelected: true,
+        MedicineSelected: true,
+        ReproductionSelected: true,
+        SellSelected: true
       }
     ],
     enabledButton: false,
@@ -44,10 +52,10 @@ class HomeScreen extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  itemSelectedHandler = pesagemSelected => {
+  itemSelectedHandler = WeighSelected => {
     this.setState(prevState => {
       return {
-        pesagemSelected: pesagemSelected
+        WeighSelected: WeighSelected
       };
     });
 
@@ -71,28 +79,163 @@ class HomeScreen extends Component {
 
   checkIfValuesAreTrue() {
     return (
-      this.state.selectedItems[0].aparteSelected ||
-      this.state.selectedItems[0].reproducaoSelected ||
-      this.state.selectedItems[0].medicamentoSelected ||
-      this.state.selectedItems[0].examesSelected ||
-      this.state.selectedItems[0].pesagemSelected ||
-      this.state.selectedItems[0].vendaSelected
+      this.state.selectedItems[0].SeparateSelected ||
+      this.state.selectedItems[0].ReproductionSelected ||
+      this.state.selectedItems[0].MedicineSelected ||
+      this.state.selectedItems[0].ExamsSelected ||
+      this.state.selectedItems[0].WeighSelected ||
+      this.state.selectedItems[0].SellSelected
     );
   }
+
+  renderExamsForm = () => {
+    if (this.state.selectedItems[0].ExamsSelected) {
+      return <ExamsForm />;
+    } else {
+      return null;
+    }
+  };
+
+  renderMedicineForm = () => {
+    if (this.state.selectedItems[0].MedicineSelected) {
+      return <MedicineForm />;
+    } else {
+      return null;
+    }
+  };
+
+  renderReproductionForm = () => {
+    if (this.state.selectedItems[0].ReproductionSelected) {
+      return <ReproductionForm />;
+    } else {
+      return null;
+    }
+  };
+
+  renderSellForm = () => {
+    if (this.state.selectedItems[0].SellSelected) {
+      return <SellForm />;
+    } else {
+      return null;
+    }
+  };
+
+  renderSeparateForm = () => {
+    if (this.state.selectedItems[0].SeparateSelected) {
+      return <SeparateForm />;
+    } else {
+      return null;
+    }
+  };
+
+  renderWeighForm = () => {
+    if (this.state.selectedItems[0].WeighSelected) {
+      return <WeighForm />;
+    } else {
+      return null;
+    }
+  };
 
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-          <Modal isVisible={this.state.isModalVisible}>
-            <View style={{ flex: 1 }}>
-              <Text>Hello!</Text>
-              <Button title="Hide modal" onPress={this.toggleModal} />
-            </View>
+          <Modal
+            isVisible={this.state.isModalVisible}
+            animationInTiming={800}
+            animationOutTiming={500}
+            style={{ margin: 0, backgroundColor: "white" }}
+          >
+            <TouchableOpacity
+              onPress={this.toggleModal}
+              style={{
+                width: 30,
+                alignSelf: 'flex-end',
+                marginRight: 10
+              }}
+            >
+              <View>
+                <Icon
+                  name="ios-close"
+                  size={50}
+                  style={{ right: 0 }}
+                  color={Colors.tabIconSelected}
+                />
+              </View>
+            </TouchableOpacity>
+            <ScrollView
+              scrollEventThrottle={16}
+              onScroll={Animated.event([
+                { nativeEvent: { contentOffset: { y: this.scrollY } } }
+              ])}
+            >
+              <View
+                style={{ flex: 1, backgroundColor: "white", paddingBottom: 20 }}
+              >
+              
+                {this.renderExamsForm()}
+                {this.renderMedicineForm()}
+                {this.renderReproductionForm()}
+                {this.renderSellForm()}
+                {this.renderSeparateForm()}
+                {this.renderWeighForm()}
+                <TouchableOpacity onPress={this.toggleModal}>
+                  <View
+                    style={[
+                      styles.button,
+                      { backgroundColor: Colors.tabIconSelected }
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "700",
+                        color: "white"
+                      }}
+                    >
+                      SALVAR E CONTINUAR
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.toggleModal}>
+                  <View
+                    style={[
+                      styles.button,
+                      { backgroundColor: Colors.warningText }
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "700",
+                        color: "white"
+                      }}
+                    >
+                      SALVAR E SAIR
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.toggleModal}>
+                  <View
+                    style={[styles.button, { backgroundColor: Colors.danger }]}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "700",
+                        color: "white"
+                      }}
+                    >
+                      VOLTAR
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </Modal>
           <ScrollView
             scrollEventThrottle={16}
-            onScroll={Animated.event([ 
+            onScroll={Animated.event([
               { nativeEvent: { contentOffset: { y: this.scrollY } } }
             ])}
           >
@@ -113,7 +256,7 @@ class HomeScreen extends Component {
                   paddingHorizontal: 20
                 }}
               >
-                Selecione para ativar os tipos de manejos que deseja e criar um
+                Selecione para ativar os tipos desejados e criar um
                 novo manejo!
               </Text>
               <View
@@ -190,5 +333,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+    height: 40,
+    margin: 6
   }
 });
