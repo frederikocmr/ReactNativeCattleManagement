@@ -100,9 +100,7 @@ class ManagementScreen extends Component {
                 onChangeText={email => this.setState({ email })}
                 value={this.state.email}
               />
-            </View>
-
-            <Text style={styles.title}> Pesagem </Text>
+               <Text style={styles.title}> Pesagem </Text>
             <Text style={styles.subtitle}> Peso:</Text>
             <TextInput
               style={styles.textInput}
@@ -162,6 +160,9 @@ class ManagementScreen extends Component {
               <Picker.Item label="Teste 1" value="5" /> 
               <Picker.Item label="Teste 2" value="4" />
             </Picker>
+            </View>
+
+           
 
 
             <TouchableOpacity onPress={this.navigateToManage}>
