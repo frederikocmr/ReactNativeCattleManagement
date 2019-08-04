@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import { 
-  View,
-  Text,
-  StyleSheet,
-  Alert
-} from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 
 import ManageInput from "../components/ListScreen/ManageInput";
 import ManageList from "../components/ListScreen/ManageList";
@@ -12,11 +7,11 @@ import ManageDetail from "../components/ListScreen/ManageDetail";
 
 class ManageScreen extends Component {
   state = {
-    places: [],
-    selectedManage: null,
+    places: [{ key: Math.random(), name: 'Manejo de Teste' }, { key: Math.random(), name: 'Outro Manejo de Teste' }],
+    selectedManage: null
   };
 
-  placeAddedHandler = manageName => {  
+  placeAddedHandler = manageName => {
     this.setState(prevState => {
       return {
         places: prevState.places.concat({
@@ -50,19 +45,19 @@ class ManageScreen extends Component {
 
   placeSelectedHandler = key => {
     Alert.alert(
-      'MANEJO',
-      'Selecione uma opção',
+      "MANEJO",
+      "Selecione uma opção",
       [
         {
-          text: 'Excluir',
-          onPress: () => console.log('Excluir'),
-          style: 'cancel',
+          text: "Excluir",
+          onPress: () => console.log("Excluir"),
+          style: "cancel"
         },
-        {text: 'Voltar', onPress: () => console.log('Ask me later pressed')},
-        
-        {text: 'Continuar', onPress: () => console.log('OK Pressed')},
+        { text: "Voltar", onPress: () => console.log("Ask me later pressed") },
+
+        { text: "Continuar", onPress: () => console.log("OK Pressed") }
       ],
-      {cancelable: false},
+      { cancelable: false }
     );
 
     this.setState(prevState => {
@@ -72,13 +67,9 @@ class ManageScreen extends Component {
         })
       };
     });
-
   };
 
   render() {
-    const { navigation } = this.props;
-    const itemId = navigation.getParam('itemId');
-
     return (
       <View style={styles.container}>
         <ManageDetail
@@ -86,8 +77,7 @@ class ManageScreen extends Component {
           onItemDeleted={this.placeDeletedHandler}
           onModalClosed={this.modalClosedHandler}
         />
-        <Text>itemId: {JSON.stringify(itemId)}</Text>
-        <ManageInput onPlaceAdded={this.placeAddedHandler} />
+        {/* <ManageInput onPlaceAdded={this.placeAddedHandler} /> */}
         <ManageList
           places={this.state.places}
           onItemSelected={this.placeSelectedHandler}
@@ -99,7 +89,7 @@ class ManageScreen extends Component {
 export default ManageScreen;
 
 ManageScreen.navigationOptions = {
-  title: 'Meus Manejos',
+  title: "Meus Manejos"
 };
 
 const styles = StyleSheet.create({

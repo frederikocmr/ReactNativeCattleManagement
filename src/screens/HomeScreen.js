@@ -16,6 +16,9 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import Home from "../components/HomeScreen/Home";
 
+import { NavigationActions } from 'react-navigation';
+import Dialog from "react-native-dialog";
+
 import ExamsForm from "../components/ManagementModal/ExamsForm";
 import MedicineForm from "../components/ManagementModal/MedicineForm";
 import ReproductionForm from "../components/ManagementModal/ReproductionForm";
@@ -42,11 +45,31 @@ class HomeScreen extends Component {
     ReproductionSelected: false,
     SellSelected: false,
     enabledButton: false,
-    isModalVisible: false
+    isModalVisible: false,
+    dialogVisible: false,
+    idAnimal: 0
   };
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+  
+  handleID = (id) => {
+    this.setState({ idAnimal: id });
+  };
+
+  handleBT = () => {
+    alert("Bluetooth indisponivel!");
+  };
+
+  handleConfirm = () => {
+    this.handleCancel();
+    this.toggleModal();
+    this.sendIdtoManage();
+  }
+
+  handleCancel = () => {
+    this.setState({ dialogVisible: false });
   };
 
   itemSelectedHandler = (propSelected, propName) => {
@@ -80,7 +103,6 @@ class HomeScreen extends Component {
           };
         default:
           this.state.enabledButton = propSelected;
-
           break;
       }
     });
@@ -108,6 +130,20 @@ class HomeScreen extends Component {
       enabledButton: false
     });
   };
+
+  navigateToManage = () => {
+    
+    this.showDialog();
+  }
+
+  showDialog = () => {
+    this.setState({ dialogVisible: true });
+  };
+
+  sendIdtoManage = () => {
+    alert(this.state.idAnimal);
+    this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'ManagementScreen', params: { idAnimal: this.state.idAnimal }}));
+  }
 
   checkIfValuesAreTrue() {
     return (
@@ -228,13 +264,7 @@ class HomeScreen extends Component {
                 {this.renderSellForm()}
                 {this.renderSeparateForm()}
                 {this.renderWeighForm()}
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.navigate("ManageScreen", {
-                      itemId: 86
-                    });
-                  }}
-                >
+                <TouchableOpacity onPress={this.navigateToManage}>
                   <View
                     style={[
                       styles.button,
@@ -391,6 +421,16 @@ class HomeScreen extends Component {
               </View>
             </View>
           </ScrollView>
+          <View>
+          <Dialog.Container visible={this.state.dialogVisible}>
+            <Dialog.Title>Selecionar animal</Dialog.Title>
+            <Dialog.Description>Por favor, digite o ID:</Dialog.Description>
+            <Dialog.Input label="ID" onChangeText={id_ => this.handleID(id_)} />
+            <Dialog.Button label="Voltar" onPress={this.handleCancel} />
+            <Dialog.Button label="Bluetooth" onPress={this.handleBT}  />
+            <Dialog.Button label="Confirmar" onPress={this.handleConfirm} />
+          </Dialog.Container>
+        </View>
         </View>
       </SafeAreaView>
     );
