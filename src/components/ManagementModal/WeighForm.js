@@ -7,25 +7,11 @@ class SeparateForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "400",
-            color: '#8da614'
-          }}
-        >
-          Pesagem
-        </Text>
-        <Text
-        style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-          >Selecione o tipo de pesagem abaixo:</Text>
+        <Text tyle={styles.title}> Pesagem </Text>
+        <Text style={styles.subtitle}>Selecione o tipo de pesagem abaixo:</Text>
         <Picker
           selectedValue={this.state.exam}
-          style={{ height: 70, width: "100%" , color: "gray"}}
+          style={styles.picker}
           onValueChange={(itemValue, itemIndex) =>
             this.setState({ exam: itemValue })
           }
@@ -37,16 +23,10 @@ class SeparateForm extends Component {
           <Picker.Item label="Inicio de Safra" value="5" />
           <Picker.Item label="Pesagem Simples" value="6" />
         </Picker>
-        <Text
-        style={{
-            fontSize: 15,
-            marginTop: 5,
-            fontWeight: "400"
-          }}
-          >Selecione a unidade de peso abaixo:</Text>
+        <Text style={styles.subtitle}>Selecione a unidade de peso abaixo:</Text>
         <Picker
           selectedValue={this.state.exam}
-          style={{ height: 70, width: "100%", color: "gray" }}
+          style={styles.picker}
           onValueChange={(itemValue, itemIndex) =>
             this.setState({ exam: itemValue })
           }
@@ -67,5 +47,20 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderBottomColor: 'gray' ,
     borderBottomWidth: 0.5
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "400",
+    color: '#8da614'
+  },
+  subtitle: {
+    fontSize: 15,
+    marginTop: 5,
+    fontWeight: "400"
+  },
+  picker: {
+    height: 70, 
+    width: "100%", 
+    color: "gray"
   }
 });
