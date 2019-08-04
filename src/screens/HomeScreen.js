@@ -141,8 +141,12 @@ class HomeScreen extends Component {
   };
 
   sendIdtoManage = () => {
-    alert(this.state.idAnimal);
-    this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'ManagementScreen', params: { idAnimal: this.state.idAnimal }}));
+    if (this.state.idAnimal) {
+      this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'ManagementScreen', params: { idAnimal: this.state.idAnimal }}));
+    } else {
+      alert('Animal não encontrado!');
+    }
+    
   }
 
   checkIfValuesAreTrue() {
@@ -250,9 +254,9 @@ class HomeScreen extends Component {
                   }}
                 >
                   Nome do Manejo:
-                </Text>
+                </Text> 
                 <TextInput
-                  style={styles.textInput}
+                  style={styles.textInput} 
                   autoCapitalize="none"
                   placeholder="Nome do Manejo"
                   onChangeText={email => this.setState({ email })}

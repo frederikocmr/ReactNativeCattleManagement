@@ -3,8 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  FlatList
+  ScrollView,
+  FlatList,
+  TextInput,
+  Picker,
+  Animated,
+  SafeAreaView,
+  TouchableOpacity
 } from "react-native";
 
 import Animals from "../constants/Animals";
@@ -12,7 +17,10 @@ import Colors from "../constants/Colors";
 
 class ManagementScreen extends Component {
   state = {
-    dialogVisible: false
+    dialogVisible: false,
+    email: "",
+    password: "",
+    errorMessage: null
   };
 
   createRows = (data, itemId) =>
@@ -26,11 +34,10 @@ class ManagementScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const itemId = navigation.getParam('itemId', '100');
-    alert(itemId);
+    const itemId = navigation.getParam("idAnimal", "100");
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View>
           <FlatList
             data={this.createRows(Animals.animals, itemId)}
@@ -76,7 +83,105 @@ class ManagementScreen extends Component {
             }}
           />
         </View>
-      </View>
+        <ScrollView
+          scrollEventThrottle={16}
+          onScroll={Animated.event([
+            { nativeEvent: { contentOffset: { y: this.scrollY } } }
+          ])}
+        >
+          <View>
+            <View style={styles.container}>
+              <Text style={styles.title}> Medicamento </Text>
+              <Text style={styles.subtitle}> Medicamento 1:</Text>
+              <TextInput
+                style={styles.textInput}
+                autoCapitalize="none"
+                placeholder="Quantidade em ML"
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
+              />
+            </View>
+
+            <Text style={styles.title}> Pesagem </Text>
+            <Text style={styles.subtitle}> Peso:</Text>
+            <TextInput
+              style={styles.textInput}
+              autoCapitalize="none"
+              placeholder="Peso em KG"
+              onChangeText={email => this.setState({ email })}
+              value={this.state.email}
+            />
+            <Text style={styles.title}> Aparte </Text>
+            <Text style={styles.subtitle}> Lote:</Text>
+            <Picker
+              selectedValue={this.state.exam}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ exam: itemValue })
+              }
+            >
+              <Picker.Item label="Lote 1" value="1" />
+              <Picker.Item label="Lote 2" value="2" />
+            </Picker>
+
+            <Text style={styles.title}> Exame </Text>
+            <Text style={styles.subtitle}> Selecione:</Text>
+            <Picker
+              selectedValue={this.state.exam}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ exam: itemValue })
+              }
+            >
+              <Picker.Item label="Exame 1" value="11" />
+              <Picker.Item label="Exame 2" value="21" />
+            </Picker>
+
+            <Text style={styles.title}> Reprodução </Text>
+            <Text style={styles.subtitle}> Selecione o Touro:</Text>
+            <Picker
+              selectedValue={this.state.exam}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ exam: itemValue })
+              }
+            >
+              <Picker.Item label="Touro 1" value="5" />
+              <Picker.Item label="Touro 2" value="4" />
+            </Picker>
+
+            <Text style={styles.title}> Venda </Text>
+            <Text style={styles.subtitle}> Selecione:</Text>
+            <Picker
+              selectedValue={this.state.exam}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ exam: itemValue }) 
+              }
+            >
+              <Picker.Item label="Teste 1" value="5" /> 
+              <Picker.Item label="Teste 2" value="4" />
+            </Picker>
+
+
+            <TouchableOpacity onPress={this.navigateToManage}>
+              <View
+                style={[styles.button, { backgroundColor: Colors.mainColor }]}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "700",
+                    color: "white"
+                  }}
+                >
+                  PRÓXIMO ANIMAL
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
@@ -90,8 +195,7 @@ ManagementScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    padding: 20
   },
   item: {
     backgroundColor: "white",
@@ -115,5 +219,36 @@ const styles = StyleSheet.create({
   },
   textItem: {
     color: "#592304"
+  },
+  textInput: {
+    height: 40,
+    width: "100%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
+    borderRadius: 8,
+    marginBottom: 8
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "400",
+    color: "#8da614"
+  },
+  subtitle: {
+    fontSize: 15,
+    marginTop: 5,
+    fontWeight: "400"
+  },
+  picker: {
+    height: 70,
+    width: "100%",
+    color: "gray"
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+    height: 40,
+    margin: 6
   }
 });
