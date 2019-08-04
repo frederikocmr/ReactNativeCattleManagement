@@ -7,11 +7,12 @@ import {
   ScrollView,
   Dimensions,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 
+import Modal from "react-native-modal";
 import Home from "../components/HomeScreen/Home";
-import ManagementDetail from "../components/HomeScreen/ManagementDetail"
 
 import PesagemImage from "../assets/images/pesagem.png";
 import ExamesImage from "../assets/images/pesagem.png";
@@ -20,37 +21,78 @@ import MedicamentoImage from "../assets/images/pesagem.png";
 import ReproducaoImage from "../assets/images/pesagem.png";
 import VendaImage from "../assets/images/pesagem.png";
 
-import Colors from '../constants/Colors';
+import Colors from "../constants/Colors";
 const { height, width } = Dimensions.get("window");
 
 class HomeScreen extends Component {
   state = {
-    pesagemSelected: false,
-    examesSelected: false,
-    aparteSelected: false,
-    medicamentoSelected: false,
-    reproducaoSelected: false,
-    vendaSelected: false
+    selectedItems: [
+      {
+        pesagemSelected: true,
+        examesSelected: false,
+        aparteSelected: false,
+        medicamentoSelected: false,
+        reproducaoSelected: false,
+        vendaSelected: false
+      }
+    ],
+    enabledButton: false,
+    isModalVisible: false
   };
 
-  itemSelectedHandler = () => {
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
+  itemSelectedHandler = pesagemSelected => {
     this.setState(prevState => {
       return {
-        itemSelected: true
+        pesagemSelected: pesagemSelected
       };
     });
 
     alert("item selecionado");
   };
 
+  onAddManagement = () => {
+    this.setState(prevState => {
+      return {
+        enabledButton: this.checkIfValuesAreTrue()
+      };
+    });
+    this.toggleModal();
+  };
+
+  modalClosedHandler = () => {
+    this.setState({
+      enabledButton: false
+    });
+  };
+
+  checkIfValuesAreTrue() {
+    return (
+      this.state.selectedItems[0].aparteSelected ||
+      this.state.selectedItems[0].reproducaoSelected ||
+      this.state.selectedItems[0].medicamentoSelected ||
+      this.state.selectedItems[0].examesSelected ||
+      this.state.selectedItems[0].pesagemSelected ||
+      this.state.selectedItems[0].vendaSelected
+    );
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-        <ManagementDetail/>
+          <Modal isVisible={this.state.isModalVisible}>
+            <View style={{ flex: 1 }}>
+              <Text>Hello!</Text>
+              <Button title="Hide modal" onPress={this.toggleModal} />
+            </View>
+          </Modal>
           <ScrollView
             scrollEventThrottle={16}
-            onScroll={Animated.event([
+            onScroll={Animated.event([ 
               { nativeEvent: { contentOffset: { y: this.scrollY } } }
             ])}
           >
@@ -71,8 +113,8 @@ class HomeScreen extends Component {
                   paddingHorizontal: 20
                 }}
               >
-                Selecione os tipos de manejos que deseja para criar um novo
-                manejo!
+                Selecione para ativar os tipos de manejos que deseja e criar um
+                novo manejo!
               </Text>
               <View
                 style={{
@@ -98,17 +140,35 @@ class HomeScreen extends Component {
                 />
                 <Home width={width} image={ReproducaoImage} name="REPRODUÇÃO" />
                 <Home width={width} image={VendaImage} name="VENDA" />
-               
               </View>
-              <View style={{
+              <View
+                style={{
                   paddingHorizontal: 20,
                   marginTop: 17
-                }}>
-                <TouchableOpacity >
-                    <View style = {{backgroundColor: Colors.tabIconSelected, alignItems: 'center', 
-                                    justifyContent: 'center', borderRadius: 15, height: 60, borderColor: Colors.tabIconSelected, borderWidth: 3}}>
-                        <Text style = {{fontSize: 16 ,fontWeight: "700", color: 'white' }}>INICIAR NOVO MANEJO</Text>
-                    </View>
+                }}
+              >
+                <TouchableOpacity onPress={this.onAddManagement}>
+                  <View
+                    style={{
+                      backgroundColor: Colors.tabIconSelected,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 15,
+                      height: 60,
+                      borderColor: Colors.tabIconSelected,
+                      borderWidth: 3
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "700",
+                        color: "white"
+                      }}
+                    >
+                      INICIAR NOVO MANEJO
+                    </Text>
+                  </View>
                 </TouchableOpacity>
               </View>
             </View>
