@@ -17,7 +17,7 @@ class LinksScreen extends Component {
 export default LinksScreen;
 
 LinksScreen.navigationOptions = {
-  title: 'Links',
+  title: 'Meus Manejos',
 };
 
 const styles = StyleSheet.create({
